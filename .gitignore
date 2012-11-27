@@ -1,4 +1,8 @@
 *.class
+wine-spider.iml
+.idea/
+target/
+output/
 
 # Package Files #
 *.jar
