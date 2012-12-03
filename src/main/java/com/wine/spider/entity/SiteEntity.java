@@ -16,7 +16,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SPIDER_SITE")
 public class SiteEntity extends BaseEntity {
-
+    @Column(name = "NAME")
+    private String name;
     @Column(name = "SITE")
     private String site;
     @Column(name = "STATUS")
@@ -25,6 +26,16 @@ public class SiteEntity extends BaseEntity {
     private Long rate;
     @Column(name = "RANDOM")
     private Long random;
+    @Column(name="NOTE")
+    private String note;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getSite() {
         return site;
@@ -56,5 +67,13 @@ public class SiteEntity extends BaseEntity {
 
     public void setRandom(Long random) {
         this.random = random;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
