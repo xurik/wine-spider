@@ -1,8 +1,9 @@
 package com.wine.spider.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,8 +15,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SPIDER_SEARCH")
 public class SearchEntity extends BaseEntity {
-    @Column(name = "SITE")
-    private String site;
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH }, optional = true)
+    @JoinColumn(name="SITE_ID")
+    private SiteEntity siteEntity;
     @Column(name = "URI")
     private String uri;
     @Column(name = "CT")
@@ -33,12 +35,12 @@ public class SearchEntity extends BaseEntity {
     @Column(name = "DATA_GROOVY")
     private String dataGroovy;
 
-    public String getSite() {
-        return site;
+    public SiteEntity getSiteEntity() {
+        return siteEntity;
     }
 
-    public void setSite(String site) {
-        this.site = site;
+    public void setSiteEntity(SiteEntity siteEntity) {
+        this.siteEntity = siteEntity;
     }
 
     public String getUri() {

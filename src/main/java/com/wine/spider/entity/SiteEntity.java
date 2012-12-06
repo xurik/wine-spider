@@ -1,10 +1,12 @@
 package com.wine.spider.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,8 +28,11 @@ public class SiteEntity extends BaseEntity {
     private Long rate;
     @Column(name = "RANDOM")
     private Long random;
-    @Column(name="NOTE")
+    @Column(name = "NOTE")
     private String note;
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "siteEntity")
+    //这里配置关系，并且确定关系维护端和被维护端。mappBy表示关系被维护端，只有关系端有权去更新外键。这里还有注意OneToMany默认的加载方式是赖加载。当看到设置关系中最后一个单词是Many，那么该加载默认为懒加载
+    private List<SearchEntity> searchEntityList = new ArrayList<SearchEntity>();
 
     public String getName() {
         return name;
@@ -75,5 +80,18 @@ public class SiteEntity extends BaseEntity {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public List<SearchEntity> getSearchEntityList() {
+        return searchEntityList;
+    }
+
+    public void setSearchEntityList(List<SearchEntity> searchEntityList) {
+        this.searchEntityList = searchEntityList;
+    }
+
+    public void addSearchEntity(SearchEntity searchEntity) {
+        searchEntity.setSiteEntity(this); //用关系维护端来维护关系
+        this.searchEntityList.add(searchEntity);
     }
 }

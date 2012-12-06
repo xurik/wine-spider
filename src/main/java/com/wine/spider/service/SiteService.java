@@ -2,6 +2,8 @@ package com.wine.spider.service;
 
 import com.wine.spider.entity.SiteEntity;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: sunday
@@ -11,4 +13,5 @@ import com.wine.spider.entity.SiteEntity;
  */
 public interface SiteService {
     SiteEntity save(SiteEntity entity);
+    List<SiteEntity> list();
 }

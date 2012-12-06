@@ -17,7 +17,7 @@ import javax.persistence.MappedSuperclass;
  * To change this template use File | Settings | File Templates.
  */
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

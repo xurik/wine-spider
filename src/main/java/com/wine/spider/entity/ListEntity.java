@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SPIDER_LIST")
 public class ListEntity extends BaseEntity {
-    @Column(name="search")
+    @Column(name = "search")
     private String search;
     @Column(name = "SITE")
     private String site;

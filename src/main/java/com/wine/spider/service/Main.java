@@ -38,7 +38,7 @@ public class Main {
         System.out.println(result);
         Elements newsHeadlines = doc.select("li[data-goodsid]");
         Iterator<Element> iterator = newsHeadlines.iterator();
-        while(!iterator.hasNext()){
+        while (!iterator.hasNext()) {
             Element element = iterator.next();
             System.out.println(element.attr("data-goodsid"));
             Thread.sleep(3000);

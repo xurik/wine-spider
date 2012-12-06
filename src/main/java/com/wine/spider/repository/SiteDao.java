@@ -1,8 +1,8 @@
 package com.wine.spider.repository;
 
 import com.wine.spider.entity.SiteEntity;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,7 +11,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * Time: 7:44 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface SiteDao{
+public interface SiteDao {
     SiteEntity save(SiteEntity entity);
+    List<SiteEntity> list();
 
 }
