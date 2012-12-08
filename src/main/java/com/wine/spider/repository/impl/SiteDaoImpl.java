@@ -32,6 +32,7 @@ public class SiteDaoImpl implements SiteDao {
 
     public List<SiteEntity> list() {
         String qlString = "select t from SiteEntity t order by t.id";
+
         return entityManager.createQuery(qlString).getResultList();
     }
 
