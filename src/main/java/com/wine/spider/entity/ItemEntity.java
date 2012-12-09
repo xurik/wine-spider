@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "SPIDER_ITEM")
 public class ItemEntity extends BaseEntity {
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, optional = true)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH }, optional = true)
     @JoinColumn(name="LIST_ID")
     @JsonBackReference
     private ListEntity listEntity;

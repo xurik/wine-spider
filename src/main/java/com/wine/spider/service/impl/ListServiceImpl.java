@@ -8,6 +8,7 @@ import com.wine.spider.repository.ListDao;
 import com.wine.spider.service.ListService;
 import com.wine.spider.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * Time: 10:51 AM
  * To change this template use File | Settings | File Templates.
  */
+@Service
 public class ListServiceImpl implements ListService{
     @Autowired
     private ListDao listDao;

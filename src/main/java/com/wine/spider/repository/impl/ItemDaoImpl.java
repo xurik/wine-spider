@@ -3,6 +3,7 @@ package com.wine.spider.repository.impl;
 import com.wine.spider.entity.ItemEntity;
 import com.wine.spider.entity.ListEntity;
 import com.wine.spider.repository.ItemDao;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,12 +17,14 @@ import java.util.List;
  * Time: 10:48 AM
  * To change this template use File | Settings | File Templates.
  */
+@Repository
 public class ItemDaoImpl implements ItemDao{
     @PersistenceContext
     private EntityManager entityManager;
     @Override
     public ItemEntity save(ItemEntity entity) {
-        return entityManager.merge(entity);
+        entityManager.persist(entity);
+        return entity;
     }
     public ItemEntity get(Long id){
         String qlString = "select t from ItemEntity t where t.id = :id";

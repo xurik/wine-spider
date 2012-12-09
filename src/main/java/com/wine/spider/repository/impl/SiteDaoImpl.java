@@ -28,7 +28,8 @@ public class SiteDaoImpl implements SiteDao {
     private EntityManager entityManager;
 
     public SiteEntity save(SiteEntity entity) {
-        return entityManager.merge(entity);
+        entityManager.persist(entity);
+        return entity;
     }
 
     public List<SiteEntity> list() {

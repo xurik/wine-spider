@@ -23,7 +23,8 @@ public class SearchDaoImpl implements SearchDao{
     private EntityManager entityManager;
     @Override
     public SearchEntity save(SearchEntity entity) {
-        return entityManager.merge(entity);
+        entityManager.persist(entity);
+        return entity;
     }
     public SearchEntity get(Long id){
         String qlString = "select t from SearchEntity t where t.id = :id";

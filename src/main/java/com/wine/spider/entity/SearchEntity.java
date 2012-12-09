@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "SPIDER_SEARCH")
 public class SearchEntity extends BaseEntity {
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, optional = true)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH }, optional = true)
     @JoinColumn(name="SITE_ID")
     @JsonBackReference
     private SiteEntity siteEntity;
