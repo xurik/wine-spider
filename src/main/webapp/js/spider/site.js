@@ -28,7 +28,7 @@ function search(id){
                 {name:'name',index:'name', label:"中文名",width:90,editable:true},
                 {name:'site',index:'site', label:"站点",width:90,editable:true},
                 {name:'status',index:'status', label:"状态",width:90,editable:true},
-                {name:'rate',index:'rate', label:"一分钟几次",width:90,editable:true},
+                {name:'rate',index:'rate', label:"访问间隔",width:90,editable:true},
                 {name:'random',index:'random', label:"随机数",width:90,editable:true},
 
                 {name:'gmtCreate',index:"gmtCreate",label:'创建时间', width:100},
