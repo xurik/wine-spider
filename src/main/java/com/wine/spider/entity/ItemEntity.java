@@ -1,8 +1,8 @@
 package com.wine.spider.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,22 +14,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SPIDER_ITEM")
 public class ItemEntity extends BaseEntity {
-    @Column(name = "LIST")
-    private String list;
-    @Column(name = "ITEM_ID")
-    private String itemId;
-    @Column(name = "SITE")
-    private String site;
-    @Column(name = "SEARCH")
-    private String search;
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, optional = true)
+    @JoinColumn(name="LIST_ID")
+    @JsonBackReference
+    private ListEntity listEntity;
     @Column(name = "URL")
     private String url;
-    @Column(name = "CT")
-    private Integer count;
     @Column(name = "SUCCESS")
-    private Integer success;
-    @Column(name = "FAIL")
-    private Integer fail;
+    private Boolean success;
     @Column(name = "HTML")
     private String html;
     @Column(name = "DATA_JSON")
@@ -37,39 +29,12 @@ public class ItemEntity extends BaseEntity {
     @Column(name = "DATA_GROOVY")
     private String dataGroovy;
 
-    @Column(name = "XTYPE")
-    private String type;
-
-    public String getList() {
-        return list;
+    public ListEntity getListEntity() {
+        return listEntity;
     }
 
-    public void setList(String list) {
-        this.list = list;
-    }
-
-    public String getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
-    }
-
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
-    }
-
-    public String getSearch() {
-        return search;
-    }
-
-    public void setSearch(String search) {
-        this.search = search;
+    public void setListEntity(ListEntity listEntity) {
+        this.listEntity = listEntity;
     }
 
     public String getUrl() {
@@ -80,28 +45,12 @@ public class ItemEntity extends BaseEntity {
         this.url = url;
     }
 
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public Integer getSuccess() {
+    public Boolean getSuccess() {
         return success;
     }
 
-    public void setSuccess(Integer success) {
+    public void setSuccess(Boolean success) {
         this.success = success;
-    }
-
-    public Integer getFail() {
-        return fail;
-    }
-
-    public void setFail(Integer fail) {
-        this.fail = fail;
     }
 
     public String getHtml() {
@@ -126,13 +75,5 @@ public class ItemEntity extends BaseEntity {
 
     public void setDataGroovy(String dataGroovy) {
         this.dataGroovy = dataGroovy;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

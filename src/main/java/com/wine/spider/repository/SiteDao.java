@@ -11,8 +11,8 @@ import java.util.List;
  * Time: 7:44 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface SiteDao {
+public interface SiteDao{
     SiteEntity save(SiteEntity entity);
     List<SiteEntity> list();
-
+    SiteEntity get(Long id);
 }

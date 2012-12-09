@@ -1,13 +1,14 @@
 package com.wine.spider.repository.impl;
 
 import com.wine.spider.entity.SearchEntity;
+import com.wine.spider.entity.SiteEntity;
 import com.wine.spider.repository.SearchDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Date;
-import java.util.UUID;
+import javax.persistence.Query;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,9 +23,17 @@ public class SearchDaoImpl implements SearchDao{
     private EntityManager entityManager;
     @Override
     public SearchEntity save(SearchEntity entity) {
-        entity.setGmtCreate(new Date());
-        entity.setGmtModified(new Date());
-        entity.setUui(UUID.randomUUID().toString().replace("-", ""));
         return entityManager.merge(entity);
+    }
+    public SearchEntity get(Long id){
+        String qlString = "select t from SearchEntity t where t.id = :id";
+        Query query = entityManager.createQuery(qlString);
+        query.setParameter("id",id);
+        return (SearchEntity)query.getSingleResult();
+    }
+
+    public List<SearchEntity> list() {
+        String qlString = "select t from SearchEntity t order by t.id";
+        return entityManager.createQuery(qlString).getResultList();
     }
 }

@@ -1,5 +1,6 @@
 package com.wine.spider.service;
 
+import com.wine.spider.entity.SearchEntity;
 import com.wine.spider.entity.SiteEntity;
 
 import java.util.List;
@@ -14,4 +15,6 @@ import java.util.List;
 public interface SiteService {
     SiteEntity save(SiteEntity entity);
     List<SiteEntity> list();
+    SiteEntity get(Long id);
+    SiteEntity addSearch(Long id,SearchEntity searchEntity);
 }

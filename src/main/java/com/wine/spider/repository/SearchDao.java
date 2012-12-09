@@ -1,6 +1,9 @@
 package com.wine.spider.repository;
 
 import com.wine.spider.entity.SearchEntity;
+import com.wine.spider.entity.SiteEntity;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,4 +14,6 @@ import com.wine.spider.entity.SearchEntity;
  */
 public interface SearchDao {
     SearchEntity save(SearchEntity entity);
+    List<SearchEntity> list();
+    SearchEntity get(Long id);
 }

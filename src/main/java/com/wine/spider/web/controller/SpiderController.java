@@ -24,12 +24,10 @@ public class SpiderController {
     @Autowired
     private SiteService siteService;
 
-    @RequestMapping("/test")
+    @RequestMapping("/index")
     public String test(Model model) {
-        SiteEntity siteEntity = siteService.save(new SiteEntity());
 
-        List<SiteEntity> list = siteService.list();
-        model.addAttribute("list",list);
-        return "test";
+        return "index";
     }
+
 }

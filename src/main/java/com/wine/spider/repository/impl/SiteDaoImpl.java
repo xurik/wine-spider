@@ -6,6 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -23,17 +28,19 @@ public class SiteDaoImpl implements SiteDao {
     private EntityManager entityManager;
 
     public SiteEntity save(SiteEntity entity) {
-        entity.setGmtCreate(new Date());
-        entity.setGmtModified(new Date());
-        entity.setUui(UUID.randomUUID().toString().replace("-", ""));
-        entityManager.merge(entity);
-        return entity;
+        return entityManager.merge(entity);
     }
 
     public List<SiteEntity> list() {
         String qlString = "select t from SiteEntity t order by t.id";
-
         return entityManager.createQuery(qlString).getResultList();
+    }
+
+    public  SiteEntity get(Long id){
+        String qlString = "select t from SiteEntity t where t.id = :id";
+        Query query = entityManager.createQuery(qlString);
+        query.setParameter("id",id);
+        return (SiteEntity)query.getSingleResult();
     }
 
 }

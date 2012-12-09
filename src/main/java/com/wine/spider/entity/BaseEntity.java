@@ -23,16 +23,16 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     protected Long id;
-    @Column(name = "UUID", updatable = false, nullable = false, unique = true)
-    protected String uui;
+    @Column(name = "XUUID", updatable = false, nullable = false, unique = true)
+    protected String uuid;
     @Column(name = "GMT_CREATE", updatable = false, nullable = false)
     protected Date gmtCreate;
     @Column(name = "GMT_MODIFIED", nullable = false)
     protected Date gmtModified;
     @Column(name = "CREATOR")
     protected String creator;
-    @Column(name = "MODIFIER")
-    protected String modifier;
+    @Column(name = "MODIFIED")
+    protected String modified;
 
     public Long getId() {
         return id;
@@ -42,12 +42,12 @@ public class BaseEntity {
         this.id = id;
     }
 
-    public String getUui() {
-        return uui;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setUui(String uui) {
-        this.uui = uui;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public Date getGmtCreate() {
@@ -74,11 +74,11 @@ public class BaseEntity {
         this.creator = creator;
     }
 
-    public String getModifier() {
-        return modifier;
+    public String getModified() {
+        return modified;
     }
 
-    public void setModifier(String modifier) {
-        this.modifier = modifier;
+    public void setModified(String modified) {
+        this.modified = modified;
     }
 }

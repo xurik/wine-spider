@@ -1,8 +1,10 @@
 package com.wine.spider.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,39 +16,27 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SPIDER_LIST")
 public class ListEntity extends BaseEntity {
-    @Column(name = "search")
-    private String search;
-    @Column(name = "SITE")
-    private String site;
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, optional = true)
+    @JoinColumn(name="SEARCH_ID")
+    @JsonBackReference
+    private SearchEntity searchEntity;
     @Column(name = "URI")
     private String uri;
-    @Column(name = "CT")
-    private Integer count;
     @Column(name = "SUCCESS")
-    private Integer success;
-    @Column(name = "FAIL")
-    private Integer fail;
+    private Boolean success;
     @Column(name = "HTML")
     private String html;
     @Column(name = "ITEM_GROOVY")
     private String itemGroovy;
-    @Column(name = "XTYPE")
-    private String type;
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "listEntity")
+    private List<ItemEntity> itemEntityList = new ArrayList<ItemEntity>();
 
-    public String getSearch() {
-        return search;
+    public SearchEntity getSearchEntity() {
+        return searchEntity;
     }
 
-    public void setSearch(String search) {
-        this.search = search;
-    }
-
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
+    public void setSearchEntity(SearchEntity searchEntity) {
+        this.searchEntity = searchEntity;
     }
 
     public String getUri() {
@@ -57,28 +47,12 @@ public class ListEntity extends BaseEntity {
         this.uri = uri;
     }
 
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public Integer getSuccess() {
+    public Boolean getSuccess() {
         return success;
     }
 
-    public void setSuccess(Integer success) {
+    public void setSuccess(Boolean success) {
         this.success = success;
-    }
-
-    public Integer getFail() {
-        return fail;
-    }
-
-    public void setFail(Integer fail) {
-        this.fail = fail;
     }
 
     public String getHtml() {
@@ -97,11 +71,16 @@ public class ListEntity extends BaseEntity {
         this.itemGroovy = itemGroovy;
     }
 
-    public String getType() {
-        return type;
+    public List<ItemEntity> getItemEntityList() {
+        return itemEntityList;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setItemEntityList(List<ItemEntity> itemEntityList) {
+        this.itemEntityList = itemEntityList;
+    }
+
+    public void addItemEntityList(ItemEntity itemEntity) {
+        itemEntity.setListEntity(this);
+        itemEntityList.add(itemEntity);
     }
 }
