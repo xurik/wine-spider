@@ -1,8 +1,8 @@
 function search(id){
     $("#siteId").val(id);
     $('#searchList').jqGrid('setGridParam',{
-        url:'/search/'+id+'/list.j',
-        editurl:'/search/'+id+'/save.j',
+        url:'search/'+id+'/list.j',
+        editurl:'search/'+id+'/save.j',
         datatype: "json"
     }).trigger('reloadGrid');
     $( "#tabs" ).tabs("select","tabs-2");
@@ -19,7 +19,7 @@ function search(id){
             return result;
         }
         jQuery("#siteList").jqGrid({
-            url:'/site/list.j',
+            url:'site/list.j',
             mtype:'POST',
             datatype: "json",
             colModel:[
@@ -48,7 +48,7 @@ function search(id){
             },
             sortname: 'id',
             viewrecords: true,
-            editurl:"/site/save.j"
+            editurl:"site/save.j"
         });
         jQuery("#siteList").jqGrid('navGrid','#sitePager',{edit:true,add:true,del:true});
 

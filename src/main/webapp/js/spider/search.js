@@ -1,8 +1,8 @@
 function list(id){
     $("#searchId").val(id);
     $('#listList').jqGrid('setGridParam',{
-        url:'/list/'+id+'/list.j',
-        editurl:'/list/'+id+'/save.j',
+        url:'list/'+id+'/list.j',
+        editurl:'list/'+id+'/save.j',
         datatype: "json"
     }).trigger('reloadGrid');
     $( "#tabs" ).tabs("select","tabs-3");
