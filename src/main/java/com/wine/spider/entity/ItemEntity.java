@@ -24,10 +24,6 @@ public class ItemEntity extends BaseEntity {
     private Boolean success;
     @Column(name = "HTML")
     private String html;
-    @Column(name = "DATA_JSON")
-    private String dataJson;
-    @Column(name = "DATA_GROOVY")
-    private String dataGroovy;
 
     public ListEntity getListEntity() {
         return listEntity;
@@ -61,19 +57,4 @@ public class ItemEntity extends BaseEntity {
         this.html = html;
     }
 
-    public String getDataJson() {
-        return dataJson;
-    }
-
-    public void setDataJson(String dataJson) {
-        this.dataJson = dataJson;
-    }
-
-    public String getDataGroovy() {
-        return dataGroovy;
-    }
-
-    public void setDataGroovy(String dataGroovy) {
-        this.dataGroovy = dataGroovy;
-    }
 }

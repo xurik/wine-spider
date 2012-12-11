@@ -27,12 +27,10 @@ public class SearchEntity extends BaseEntity {
     private Boolean success;
     @Column(name = "HTML")
     private String html;
-    @Column(name = "LIST_GROOVY")
-    private String listGroovy;
-    @Column(name = "ITEM_GROOVY")
-    private String itemGroovy;
-    @Column(name = "DATA_GROOVY")
-    private String dataGroovy;
+    @Column(name = "LIST_BEAN")
+    private String listBean;
+    @Column(name = "ITEM_BEAN")
+    private String itemBean;
     @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "searchEntity")
     private List<ListEntity> listEntityList = new ArrayList<ListEntity>();
 
@@ -68,28 +66,20 @@ public class SearchEntity extends BaseEntity {
         this.html = html;
     }
 
-    public String getListGroovy() {
-        return listGroovy;
+    public String getListBean() {
+        return listBean;
     }
 
-    public void setListGroovy(String listGroovy) {
-        this.listGroovy = listGroovy;
+    public void setListBean(String listBean) {
+        this.listBean = listBean;
     }
 
-    public String getItemGroovy() {
-        return itemGroovy;
+    public String getItemBean() {
+        return itemBean;
     }
 
-    public void setItemGroovy(String itemGroovy) {
-        this.itemGroovy = itemGroovy;
-    }
-
-    public String getDataGroovy() {
-        return dataGroovy;
-    }
-
-    public void setDataGroovy(String dataGroovy) {
-        this.dataGroovy = dataGroovy;
+    public void setItemBean(String itemBean) {
+        this.itemBean = itemBean;
     }
 
     public List<ListEntity> getListEntityList() {

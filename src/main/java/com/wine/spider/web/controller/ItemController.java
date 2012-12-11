@@ -25,7 +25,7 @@ public class ItemController {
     @Autowired
     private ListService listService;
     @RequestMapping("/{listId}/list")
-    public void list(@PathVariable("searchId")Long listId,Model model){
+    public void list(@PathVariable("listId")Long listId,Model model){
         ListEntity listEntity = listService.get(listId);
         model.addAttribute("rows",listEntity.getItemEntityList());
     }

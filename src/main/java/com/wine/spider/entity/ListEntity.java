@@ -26,8 +26,7 @@ public class ListEntity extends BaseEntity {
     private Boolean success;
     @Column(name = "HTML")
     private String html;
-    @Column(name = "ITEM_GROOVY")
-    private String itemGroovy;
+
     @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "listEntity")
     private List<ItemEntity> itemEntityList = new ArrayList<ItemEntity>();
 
@@ -61,14 +60,6 @@ public class ListEntity extends BaseEntity {
 
     public void setHtml(String html) {
         this.html = html;
-    }
-
-    public String getItemGroovy() {
-        return itemGroovy;
-    }
-
-    public void setItemGroovy(String itemGroovy) {
-        this.itemGroovy = itemGroovy;
     }
 
     public List<ItemEntity> getItemEntityList() {
