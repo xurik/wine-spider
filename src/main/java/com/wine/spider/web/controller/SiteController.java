@@ -1,13 +1,17 @@
 package com.wine.spider.web.controller;
 
 import com.wine.spider.entity.SiteEntity;
+import com.wine.spider.select.Select;
 import com.wine.spider.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +26,8 @@ import java.util.Map;
 public class SiteController {
     @Autowired
     private SiteService siteService;
-
+    @Resource(name="selectMap")
+    private Map<String,List<Select>> selectMap;
     @RequestMapping(value = "/index")
     public String index(){
         return "site";

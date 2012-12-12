@@ -18,6 +18,8 @@ public class ItemEntity extends BaseEntity {
     @JoinColumn(name="LIST_ID")
     @JsonBackReference
     private ListEntity listEntity;
+    @Column(name = "NAME")
+    private String name;
     @Column(name = "URL")
     private String url;
     @Column(name = "SUCCESS")
@@ -31,6 +33,14 @@ public class ItemEntity extends BaseEntity {
 
     public void setListEntity(ListEntity listEntity) {
         this.listEntity = listEntity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUrl() {
@@ -56,5 +66,4 @@ public class ItemEntity extends BaseEntity {
     public void setHtml(String html) {
         this.html = html;
     }
-
 }

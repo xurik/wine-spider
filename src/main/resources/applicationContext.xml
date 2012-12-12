@@ -23,5 +23,13 @@
     <import resource="spring/spring-data-source.xml"></import>
     <import resource="spring/spring-jpa.xml"></import>
 
+    <util:map id="selectMap" key-type="java.lang.String" map-class="java.util.HashMap" value-type="java.util.List">
+        <entry key="yemaijiu">
+            <util:list list-class="java.util.ArrayList" value-type="com.wine.spider.select.Select">
+                <bean class="com.wine.spider.select.spider.yemaijiu.ListSelect" />
+                <bean class="com.wine.spider.select.spider.yemaijiu.ItemSelect" />
+            </util:list>
+        </entry>
+    </util:map>
 
 </beans>
