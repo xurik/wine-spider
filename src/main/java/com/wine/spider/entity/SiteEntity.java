@@ -21,14 +21,14 @@ import java.util.Set;
 public class SiteEntity extends BaseEntity {
     @Column(name = "NAME")
     private String name;
-    @Column(name = "SITE")
-    private String site;
+    @Column(name = "DOMAIN")
+    private String domain;
     @Column(name = "STATUS")
     private String status;
     @Column(name = "RATE")
     private Long rate;
     @Column(name = "RANDOM")
-    private Long random;
+    private Integer random;
     @Column(name = "NOTE")
     private String note;
     @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "siteEntity")
@@ -43,12 +43,12 @@ public class SiteEntity extends BaseEntity {
         this.name = name;
     }
 
-    public String getSite() {
-        return site;
+    public String getDomain() {
+        return domain;
     }
 
-    public void setSite(String site) {
-        this.site = site;
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 
     public String getStatus() {
@@ -67,11 +67,11 @@ public class SiteEntity extends BaseEntity {
         this.rate = rate;
     }
 
-    public Long getRandom() {
+    public Integer getRandom() {
         return random;
     }
 
-    public void setRandom(Long random) {
+    public void setRandom(Integer random) {
         this.random = random;
     }
 

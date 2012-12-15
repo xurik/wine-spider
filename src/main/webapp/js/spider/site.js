@@ -26,7 +26,7 @@ function search(id){
                 {name:'id',index:'id', lable:"ID",width:55,editable:true},
                 {name:'uuid',index:'uuid', label:"唯一标识",width:90},
                 {name:'name',index:'name', label:"中文名",width:90,editable:true},
-                {name:'site',index:'site', label:"站点",width:90,editable:true},
+                {name:'domain',index:'domain', label:"站点",width:90,editable:true},
                 {name:'status',index:'status', label:"状态",width:90,editable:true},
                 {name:'rate',index:'rate', label:"访问间隔",width:90,editable:true},
                 {name:'random',index:'random', label:"随机数",width:90,editable:true},

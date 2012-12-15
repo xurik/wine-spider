@@ -21,16 +21,16 @@ public class SearchEntity extends BaseEntity {
     @JoinColumn(name="SITE_ID")
     @JsonBackReference
     private SiteEntity siteEntity;
-    @Column(name = "URI")
-    private String uri;
+    @Column(name = "URL")
+    private String url;
     @Column(name = "SUCCESS")
     private Boolean success;
     @Column(name = "HTML")
+    @Lob
     private String html;
-    @Column(name = "LIST_BEAN")
-    private String listBean;
-    @Column(name = "ITEM_BEAN")
-    private String itemBean;
+    @Column(name = "SELECT_NAME")
+    private String selectName;
+
     @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "searchEntity")
     private List<ListEntity> listEntityList = new ArrayList<ListEntity>();
 
@@ -42,12 +42,12 @@ public class SearchEntity extends BaseEntity {
         this.siteEntity = siteEntity;
     }
 
-    public String getUri() {
-        return uri;
+    public String getUrl() {
+        return url;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Boolean getSuccess() {
@@ -66,20 +66,12 @@ public class SearchEntity extends BaseEntity {
         this.html = html;
     }
 
-    public String getListBean() {
-        return listBean;
+    public String getSelectName() {
+        return selectName;
     }
 
-    public void setListBean(String listBean) {
-        this.listBean = listBean;
-    }
-
-    public String getItemBean() {
-        return itemBean;
-    }
-
-    public void setItemBean(String itemBean) {
-        this.itemBean = itemBean;
+    public void setSelectName(String selectName) {
+        this.selectName = selectName;
     }
 
     public List<ListEntity> getListEntityList() {

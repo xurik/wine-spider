@@ -1,0 +1,15 @@
+package com.wine.spider.service;
+
+import com.wine.spider.entity.ItemEntity;
+import com.wine.spider.entity.ListEntity;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: sunday
+ * Date: 12-12-15
+ * Time: 下午5:22
+ * To change this template use File | Settings | File Templates.
+ */
+public interface ItemService {
+    ItemEntity save(ItemEntity entity);
+}

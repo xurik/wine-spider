@@ -20,11 +20,12 @@ public class ListEntity extends BaseEntity {
     @JoinColumn(name="SEARCH_ID")
     @JsonBackReference
     private SearchEntity searchEntity;
-    @Column(name = "URI")
-    private String uri;
+    @Column(name = "URL")
+    private String url;
     @Column(name = "SUCCESS")
     private Boolean success;
     @Column(name = "HTML")
+    @Lob
     private String html;
 
     @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "listEntity")
@@ -38,12 +39,12 @@ public class ListEntity extends BaseEntity {
         this.searchEntity = searchEntity;
     }
 
-    public String getUri() {
-        return uri;
+    public String getUrl() {
+        return url;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Boolean getSuccess() {

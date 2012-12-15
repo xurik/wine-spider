@@ -3,11 +3,11 @@ package com.wine.spider.select.spider.yemaijiu;
 import com.wine.spider.entity.ListEntity;
 import com.wine.spider.entity.SearchEntity;
 import com.wine.spider.select.Select;
-import com.wine.spider.service.SearchService;
 import com.wine.spider.util.UUIDUtil;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,13 +51,24 @@ public class ListSelect implements Select<ListEntity,SearchEntity> {
             }
             return Collections.emptyList();
         }
-        String path = "/z2-p";
+        String path = "";
+        try {
+            URL url = new URL(searchEntity.getUrl());
+            path = "http://"+ url.getHost();
+            if (url.getPort() != -1){
+                path +=":"+url.getPort();
+            }
+        } catch (MalformedURLException e) {
+
+        }
+        path += "/z2-c1-p";
         Integer count = Integer.valueOf(pageCount);
         List<ListEntity> result = new ArrayList<ListEntity>(count);
+        Document doc = null;
         for (int i = 1; i <= count; i++) {
             ListEntity listEntity = new ListEntity();
             listEntity.setSearchEntity(searchEntity);
-            listEntity.setUri(path + i + "/");
+            listEntity.setUrl(path + i);
             listEntity.setGmtCreate(new Date());
             listEntity.setGmtModified(new Date());
             listEntity.setUuid(UUIDUtil.random());
@@ -67,13 +79,14 @@ public class ListSelect implements Select<ListEntity,SearchEntity> {
 
     public static void main(String[] args) throws IOException {
         URL url = new URL("http://list.yesmywine.com/z2-p1");
-
+        System.out.println(url.getHost());
+        System.out.println(url.getPort());
         Document doc = Jsoup.parse(url, 5000);
         Select select = new ListSelect();
-        List<ListEntity> result = select.execute(doc,new SearchEntity());
-        for (int i = 0; i < result.size(); i++) {
-            ListEntity entity = result.get(i);
-            System.out.println(entity.getUri());
-        }
+//        List<ListEntity> result = select.execute(doc,new SearchEntity());
+//        for (int i = 0; i < result.size(); i++) {
+//            ListEntity entity = result.get(i);
+//            System.out.println(entity.getUri());
+//        }
     }
 }

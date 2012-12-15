@@ -26,8 +26,7 @@ import java.util.Map;
 public class SiteController {
     @Autowired
     private SiteService siteService;
-    @Resource(name="selectMap")
-    private Map<String,List<Select>> selectMap;
+
     @RequestMapping(value = "/index")
     public String index(){
         return "site";
@@ -43,5 +42,11 @@ public class SiteController {
     @RequestMapping(value = "/list")
     public void list(Model model){
         model.addAttribute("rows",siteService.list());
+    }
+
+    @RequestMapping(value = "/run/{id}")
+    public void build(@PathVariable("id")Long id,Model model){
+        siteService.build(id);
+        model.addAttribute("success",true);
     }
 }

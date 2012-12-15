@@ -17,4 +17,6 @@ public interface SiteService {
     List<SiteEntity> list();
     SiteEntity get(Long id);
     SiteEntity addSearch(Long id,SearchEntity searchEntity);
+
+    void build(Long id);
 }

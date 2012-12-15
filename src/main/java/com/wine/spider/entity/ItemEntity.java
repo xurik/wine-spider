@@ -25,6 +25,7 @@ public class ItemEntity extends BaseEntity {
     @Column(name = "SUCCESS")
     private Boolean success;
     @Column(name = "HTML")
+    @Lob
     private String html;
 
     public ListEntity getListEntity() {

@@ -25,10 +25,14 @@
 
     <util:map id="selectMap" key-type="java.lang.String" map-class="java.util.HashMap" value-type="java.util.List">
         <entry key="yemaijiu">
-            <util:list list-class="java.util.ArrayList" value-type="com.wine.spider.select.Select">
-                <bean class="com.wine.spider.select.spider.yemaijiu.ListSelect" />
-                <bean class="com.wine.spider.select.spider.yemaijiu.ItemSelect" />
-            </util:list>
+            <util:map>
+                <entry key="list">
+                    <bean class="com.wine.spider.select.spider.yemaijiu.ListSelect" />
+                </entry>
+                <entry key="item">
+                    <bean class="com.wine.spider.select.spider.yemaijiu.ItemSelect" />
+                </entry>
+            </util:map>
         </entry>
     </util:map>
 
