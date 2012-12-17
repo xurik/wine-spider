@@ -32,6 +32,9 @@
                 <entry key="item">
                     <bean class="com.wine.spider.select.spider.yemaijiu.ItemSelect" />
                 </entry>
+                <entry key="run">
+                    <bean class="com.wine.spider.select.spider.yemaijiu.ItemSelect" />
+                </entry>
             </util:map>
         </entry>
     </util:map>

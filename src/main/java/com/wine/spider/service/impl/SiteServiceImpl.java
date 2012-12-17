@@ -140,7 +140,6 @@ public class SiteServiceImpl implements SiteService {
                     }
                     itemEntity.setHtml(doc.html());
                     itemService.save(itemEntity);
-
                 }
             }
         }
