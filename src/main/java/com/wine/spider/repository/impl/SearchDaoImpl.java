@@ -1,5 +1,6 @@
 package com.wine.spider.repository.impl;
 
+import com.wine.spider.entity.ItemEntity;
 import com.wine.spider.entity.SearchEntity;
 import com.wine.spider.entity.SiteEntity;
 import com.wine.spider.repository.SearchDao;
@@ -31,6 +32,18 @@ public class SearchDaoImpl implements SearchDao{
         Query query = entityManager.createQuery(qlString);
         query.setParameter("id",id);
         return (SearchEntity)query.getSingleResult();
+    }
+
+    public SearchEntity findByUrl(String url){
+        String qlString = "select t from SearchEntity t where t.url = :url";
+        Query query = entityManager.createQuery(qlString);
+        query.setParameter("url",url);
+        List<SearchEntity> list = query.getResultList();
+        if (list != null && list.size()>0){
+            return list.get(0);
+        } else {
+            return null;
+        }
     }
 
     public List<SearchEntity> list() {

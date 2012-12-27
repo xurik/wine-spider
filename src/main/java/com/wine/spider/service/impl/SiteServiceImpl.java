@@ -11,6 +11,7 @@ import com.wine.spider.service.ItemService;
 import com.wine.spider.service.ListService;
 import com.wine.spider.service.SearchService;
 import com.wine.spider.service.SiteService;
+import com.wine.spider.util.BeanCopyUtil;
 import com.wine.spider.util.UUIDUtil;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
@@ -58,6 +59,8 @@ public class SiteServiceImpl implements SiteService {
         if(entity.getId() == null){
             entity.setUuid(UUIDUtil.random());
             entity.setGmtCreate(new Date());
+        }else {
+            entity = BeanCopyUtil.copyWithoutNull(siteDao.get(entity.getId()), entity);
         }
         entity.setGmtModified(new Date());
         siteDao.save(entity);
@@ -69,7 +72,7 @@ public class SiteServiceImpl implements SiteService {
             searchEntity.setUuid(UUIDUtil.random());
             searchEntity.setGmtCreate(new Date());
         }else {
-            searchEntity =  searchService.get(searchEntity.getId());
+            searchEntity = BeanCopyUtil.copyWithoutNull(searchService.get(searchEntity.getId()), searchEntity);
         }
         searchEntity.setGmtModified(new Date());
         SiteEntity siteEntity = siteDao.get(id);
@@ -119,6 +122,10 @@ public class SiteServiceImpl implements SiteService {
 
             List<ListEntity> lists = slist.execute(doc,searchEntity);
             for (ListEntity listEntity : lists){
+                ListEntity tmp = listService.findByUrl(listEntity.getUrl());
+                if(tmp != null){
+                    listEntity.setId(tmp.getId());
+                }
                 listService.save(listEntity);
             }
             for (ListEntity listEntity : lists){
@@ -139,6 +146,10 @@ public class SiteServiceImpl implements SiteService {
                         logger.error("访问Item页面失败！searchId:"+searchEntity.getId());
                     }
                     itemEntity.setHtml(doc.html());
+                    ItemEntity tmp = itemService.findByUrl(itemEntity.getUrl());
+                    if (tmp != null){
+                        itemEntity.setId(tmp.getId());
+                    }
                     itemService.save(itemEntity);
                 }
             }

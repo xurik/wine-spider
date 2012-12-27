@@ -16,4 +16,5 @@ public interface ItemDao {
     ItemEntity save(ItemEntity entity);
     ItemEntity get(Long id);
     List<ItemEntity> list();
+    ItemEntity findByUrl(String url);
 }

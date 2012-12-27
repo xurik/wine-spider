@@ -18,4 +18,5 @@ public interface ListService {
     List<ListEntity> list();
     ListEntity get(Long id);
     ListEntity addItem(Long id,ItemEntity itemEntity);
+    ListEntity findByUrl(String url);
 }

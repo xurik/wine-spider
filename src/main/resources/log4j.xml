@@ -11,7 +11,7 @@
         </layout>
     </appender>
     <appender name="com.wine.spider" class="org.apache.log4j.RollingFileAppender">
-        <param name="File" value="/home/sunday/output/spider/log.log" />
+        <param name="File" value="d:/workspace/wine-spider/output/spider/log.log" />
         <param name="Append" value="true" />
         <param name="MaxFileSize" value="10240" /> <!-- 设置文件大小 -->
         <param name="MaxBackupIndex" value="10" />

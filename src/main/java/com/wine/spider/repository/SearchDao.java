@@ -1,5 +1,6 @@
 package com.wine.spider.repository;
 
+import com.wine.spider.entity.ListEntity;
 import com.wine.spider.entity.SearchEntity;
 import com.wine.spider.entity.SiteEntity;
 
@@ -16,4 +17,5 @@ public interface SearchDao {
     SearchEntity save(SearchEntity entity);
     List<SearchEntity> list();
     SearchEntity get(Long id);
+    SearchEntity findByUrl(String url);
 }

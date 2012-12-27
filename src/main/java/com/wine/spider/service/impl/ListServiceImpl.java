@@ -6,6 +6,7 @@ import com.wine.spider.entity.SearchEntity;
 import com.wine.spider.repository.ItemDao;
 import com.wine.spider.repository.ListDao;
 import com.wine.spider.service.ListService;
+import com.wine.spider.util.BeanCopyUtil;
 import com.wine.spider.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,8 @@ public class ListServiceImpl implements ListService{
         if(entity.getId() == null){
             entity.setUuid(UUIDUtil.random());
             entity.setGmtCreate(new Date());
+        }else {
+            entity = BeanCopyUtil.copyWithoutNull(listDao.get(entity.getId()), entity);
         }
         entity.setGmtModified(new Date());
         listDao.save(entity);
@@ -64,5 +67,10 @@ public class ListServiceImpl implements ListService{
         ListEntity listEntity = listDao.get(id);
         listEntity.addItemEntityList(itemEntity);
         return listDao.save(listEntity);
+    }
+
+    @Override
+    public ListEntity findByUrl(String url) {
+        return listDao.findByUrl(url);
     }
 }

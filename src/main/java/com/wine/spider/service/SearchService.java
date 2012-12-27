@@ -18,4 +18,5 @@ public interface SearchService {
     List<SearchEntity> list();
     SearchEntity get(Long id);
     SearchEntity addList(Long id,ListEntity listEntity);
+    SearchEntity findByUrl(String url);
 }

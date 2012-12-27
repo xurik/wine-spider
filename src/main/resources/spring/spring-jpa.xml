@@ -29,6 +29,9 @@
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <!--
+                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+                -->
+                <!--
                 none
                 validate     加载hibernate时，验证创建数据库表结构
 				create       每次加载hibernate，重新创建数据库表结构

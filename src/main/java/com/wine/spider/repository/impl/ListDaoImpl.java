@@ -33,6 +33,18 @@ public class ListDaoImpl implements ListDao{
         return (ListEntity)query.getSingleResult();
     }
 
+    public ListEntity findByUrl(String url){
+        String qlString = "select t from ListEntity t where t.url = :url";
+        Query query = entityManager.createQuery(qlString);
+        query.setParameter("url",url);
+        List<ListEntity> list = query.getResultList();
+        if (list != null && list.size()>0){
+            return list.get(0);
+        } else {
+            return null;
+        }
+    }
+
     public List<ListEntity> list() {
         String qlString = "select t from ListEntity t order by t.id";
         return entityManager.createQuery(qlString).getResultList();

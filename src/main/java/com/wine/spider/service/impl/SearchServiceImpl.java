@@ -6,6 +6,7 @@ import com.wine.spider.entity.SiteEntity;
 import com.wine.spider.repository.ListDao;
 import com.wine.spider.repository.SearchDao;
 import com.wine.spider.service.SearchService;
+import com.wine.spider.util.BeanCopyUtil;
 import com.wine.spider.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,8 @@ public class SearchServiceImpl implements SearchService{
         if(entity.getId() == null){
             entity.setUuid(UUIDUtil.random());
             entity.setGmtCreate(new Date());
+        }else {
+            entity = BeanCopyUtil.copyWithoutNull(searchDao.get(entity.getId()), entity);
         }
         entity.setGmtModified(new Date());
         searchDao.save(entity);
@@ -65,5 +68,10 @@ public class SearchServiceImpl implements SearchService{
         SearchEntity searchEntity = searchDao.get(id);
         searchEntity.addListEntityList(listEntity);
         return searchDao.save(searchEntity);
+    }
+
+    @Override
+    public SearchEntity findByUrl(String url) {
+        return searchDao.findByUrl(url);
     }
 }

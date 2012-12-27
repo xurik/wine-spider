@@ -17,7 +17,7 @@ import java.util.List;
 public interface RunService {
 
     void runAll();
-
+    void runBySite(Long id);
     void runBySite(List<SiteEntity> list);
 
     void runBySearch(List<SearchEntity> list);

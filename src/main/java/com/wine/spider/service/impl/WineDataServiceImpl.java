@@ -1,10 +1,8 @@
 package com.wine.spider.service.impl;
 
-import com.wine.spider.entity.ItemEntity;
-import com.wine.spider.entity.ListEntity;
-import com.wine.spider.repository.ItemDao;
-import com.wine.spider.service.ItemService;
-import com.wine.spider.util.BeanCopyUtil;
+import com.wine.spider.entity.WineDataEntity;
+import com.wine.spider.repository.WineDataDao;
+import com.wine.spider.service.WineDataService;
 import com.wine.spider.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,30 +14,28 @@ import java.util.Date;
 /**
  * Created with IntelliJ IDEA.
  * User: sunday
- * Date: 12-12-15
- * Time: 下午5:23
+ * Date: 12-12-27
+ * Time: 上午7:21
  * To change this template use File | Settings | File Templates.
  */
 @Service
-public class ItemServiceImpl implements ItemService {
+public class WineDataServiceImpl implements WineDataService {
     @Autowired
-    private ItemDao itemDao;
+    private WineDataDao wineDataDao;
     @Override
     @Transactional
-    public ItemEntity save(ItemEntity entity) {
+    public WineDataEntity save(WineDataEntity entity) {
         Assert.notNull(entity);
         if(entity.getId() == null){
             entity.setUuid(UUIDUtil.random());
             entity.setGmtCreate(new Date());
-        }else {
-            entity = BeanCopyUtil.copyWithoutNull(itemDao.get(entity.getId()),entity);
         }
         entity.setGmtModified(new Date());
-        return itemDao.save(entity) ;
+        return wineDataDao.save(entity) ;
     }
 
     @Override
-    public ItemEntity findByUrl(String url) {
-        return itemDao.findByUrl(url);
+    public WineDataEntity findByUrl(String url) {
+        return wineDataDao.findByUrl(url);
     }
 }

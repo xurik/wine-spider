@@ -12,4 +12,5 @@ import com.wine.spider.entity.ListEntity;
  */
 public interface ItemService {
     ItemEntity save(ItemEntity entity);
+    ItemEntity findByUrl(String url);
 }

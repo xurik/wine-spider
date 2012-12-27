@@ -32,7 +32,7 @@
                 <entry key="item">
                     <bean class="com.wine.spider.select.spider.yemaijiu.ItemSelect" />
                 </entry>
-                <entry key="run">
+                <entry key="data">
                     <bean class="com.wine.spider.select.spider.yemaijiu.ItemSelect" />
                 </entry>
             </util:map>

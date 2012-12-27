@@ -1,5 +1,6 @@
 package com.wine.spider.repository;
 
+import com.wine.spider.entity.ItemEntity;
 import com.wine.spider.entity.ListEntity;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public interface ListDao {
     ListEntity save(ListEntity entity);
     ListEntity get(Long id);
     List<ListEntity> list();
+    ListEntity findByUrl(String url);
 }
