@@ -3,11 +3,15 @@ package com.wine.spider.service.impl;
 import com.wine.spider.entity.*;
 import com.wine.spider.select.Select;
 import com.wine.spider.service.*;
+import com.wine.spider.util.BeanCopyUtil;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +27,7 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 @Service
-public class RunServiceImpl implements RunService{
+public class RunServiceImpl implements RunService,ApplicationContextAware{
     private static final Logger logger = LoggerFactory.getLogger(RunServiceImpl.class);
     @Autowired
     private SiteService siteService;
@@ -35,8 +39,7 @@ public class RunServiceImpl implements RunService{
     private ItemService itemService;
     @Autowired
     private WineDataService wineDataService;
-    @Resource(name="selectMap")
-    private Map<String,Map<String,Select>> selectMap;
+    private ApplicationContext applicationContext ;
 
     @Override
     public void runAll() {
@@ -103,11 +106,37 @@ public class RunServiceImpl implements RunService{
             logger.error("html is null! itemId:{}",itemEntity.getId());
         }
         String selectName = searchEntity.getSelectName();
-        Select<WineDataEntity,ItemEntity> select = selectMap.get(selectName).get("data");
+        Map<String,Select> selectMap = null;
+        try {
+            selectMap = applicationContext.getBean(selectName,Map.class);
+        } catch (Exception e){
+            logger.error("selectMap is null! searchId:{}",searchEntity.getId());
+            return;
+        }
+        Select<WineDataEntity,ItemEntity> select = selectMap.get("data");
+        if (select == null){
+            logger.error("selectMap.data is null! searchId:{}",searchEntity.getId());
+            return;
+        }
         List<WineDataEntity>list = select.execute(Jsoup.parse(html),itemEntity);
         for (WineDataEntity wineDataEntity:list){
-            wineDataService.save(wineDataEntity);
+            wineDataEntity.setUrl(itemEntity.getUrl());
+            wineDataEntity.setItemUUID(itemEntity.getUuid());
+            wineDataEntity.setStatus("pending");
+            WineDataEntity old = wineDataService.findByUrl(itemEntity.getUrl());
+            if (old != null){
+                old = BeanCopyUtil.copyWithoutNull(old,wineDataEntity);
+                wineDataService.save(old);
+            }else {
+                wineDataService.save(wineDataEntity);
+            }
+
         }
         Jsoup.parse(html);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

@@ -48,16 +48,4 @@ public class ItemSelect implements Select<ItemEntity,ListEntity> {
         }
         return result;
     }
-
-    public static void main(String[] args) throws IOException {
-        URL url = new URL("http://list.yesmywine.com/z2-p1");
-
-        Document doc = Jsoup.parse(url, 50000);
-        Select select = new ItemSelect();
-        List<ItemEntity> result = select.execute(doc,new ListEntity());
-        for (int i = 0; i < result.size(); i++) {
-            ItemEntity entity = result.get(i);
-            System.out.println(entity.getName()+"--"+entity.getUrl());
-        }
-    }
 }

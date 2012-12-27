@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,6 +35,11 @@ public class WineDataDaoImpl implements WineDataDao{
         String qlString = "select t from WineDataEntity t where t.url = :url";
         Query query = entityManager.createQuery(qlString);
         query.setParameter("url",url);
-        return (WineDataEntity)query.getSingleResult();
+        List<WineDataEntity> list = query.getResultList();
+        if (list != null && list.size()>0){
+            return list.get(0);
+        } else {
+            return null;
+        }
     }
 }

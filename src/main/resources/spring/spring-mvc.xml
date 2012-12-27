@@ -52,8 +52,8 @@
             <props>
                 <prop key="tag_syntax">auto_detect</prop>
                 <prop key="template_update_delay">2</prop>
-                <prop key="default_encoding">${rac.encoding}</prop>
-                <prop key="output_encoding">${rac.encoding}</prop>
+                <prop key="default_encoding">${spider.encoding}</prop>
+                <prop key="output_encoding">${spider.encoding}</prop>
                 <prop key="locale">zh_CN</prop>
                 <prop key="date_format">yyyy-MM-dd</prop>
                 <prop key="time_format">HH:mm:ss</prop>
@@ -82,9 +82,9 @@
         <!-- 扩展名至mimeType的映射,即 /user.json => application/json -->
         <property name="mediaTypes">
             <map>
-                <entry key="j" value="application/json;charset=${rac.encoding}" />
-                <entry key="x" value="application/xml;charset=${rac.encoding}" />
-                <entry key="c" value="text/html;charset=${rac.encoding}"/>
+                <entry key="j" value="application/json;charset=${spider.encoding}" />
+                <entry key="x" value="application/xml;charset=${spider.encoding}" />
+                <entry key="c" value="text/html;charset=${spider.encoding}"/>
             </map>
         </property>
         <!-- 用于开启 /userinfo/123?format=json 的支持 -->
@@ -94,7 +94,7 @@
                 <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
                 <!-- 配置freeMarker视图解析器 -->
                 <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-                    <property name="contentType" value="text/html; charset=${rac.encoding}"/>
+                    <property name="contentType" value="text/html; charset=${spider.encoding}"/>
                     <property name="cache" value="true" />
                     <property name="suffix" value=".ftl" />
                 </bean>

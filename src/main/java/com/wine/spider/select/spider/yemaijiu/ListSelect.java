@@ -76,17 +76,4 @@ public class ListSelect implements Select<ListEntity,SearchEntity> {
         }
         return result;
     }
-
-    public static void main(String[] args) throws IOException {
-        URL url = new URL("http://list.yesmywine.com/z2-p1");
-        System.out.println(url.getHost());
-        System.out.println(url.getPort());
-        Document doc = Jsoup.parse(url, 5000);
-        Select select = new ListSelect();
-//        List<ListEntity> result = select.execute(doc,new SearchEntity());
-//        for (int i = 0; i < result.size(); i++) {
-//            ListEntity entity = result.get(i);
-//            System.out.println(entity.getUri());
-//        }
-    }
 }

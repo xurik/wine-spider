@@ -20,7 +20,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -39,7 +42,7 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 @Service
-public class SiteServiceImpl implements SiteService {
+public class SiteServiceImpl implements SiteService,ApplicationContextAware {
     private final static Logger logger = LoggerFactory.getLogger(SiteServiceImpl.class);
     @Autowired
     private SiteDao siteDao;
@@ -49,8 +52,7 @@ public class SiteServiceImpl implements SiteService {
     private ListService listService;
     @Autowired
     private ItemService itemService;
-    @Resource(name="selectMap")
-    private Map<String,Map<String,Select>> selectMap;
+    private ApplicationContext applicationContext ;
     private static final Random random = new Random();
     @Transactional
     @Override
@@ -104,11 +106,14 @@ public class SiteServiceImpl implements SiteService {
             if(StringUtils.isBlank(selectName)){
                 continue;
             }
-            if(!selectMap.containsKey(selectName)){
-                logger.error("找不到selectName。searchId:",searchEntity.getId());
+            Map<String,Select> sm = null;
+            try {
+                sm = applicationContext.getBean(selectName,Map.class);
+            }catch (Exception e){
+                logger.error("找不到selectName。searchId:",searchEntity.getId(),e);
                 continue;
             }
-            Map<String,Select> sm = selectMap.get(selectName);
+
             Select slist = sm.get("list");
             Select sitem = sm.get("item");
             Document doc = null;
@@ -169,4 +174,9 @@ public class SiteServiceImpl implements SiteService {
         }
     }
    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 }

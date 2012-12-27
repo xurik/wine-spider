@@ -17,10 +17,10 @@ import java.util.List;
 @Table(name = "SPIDER_WINE_DATA")
 public class WineDataEntity extends BaseEntity {
     /**爬虫ID*/
-    @Column(name="ITEM_UUID")
+    @Column(name="ITEM_UUID", unique = true)
     private String itemUUID;
     /**被爬页面URL*/
-    @Column(name="URL")
+    @Column(name="URL", unique = true)
     private String url;
     /**状态*/
     @Column(name="STATUS")

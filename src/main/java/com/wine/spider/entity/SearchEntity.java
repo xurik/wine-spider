@@ -21,7 +21,7 @@ public class SearchEntity extends BaseEntity {
     @JoinColumn(name="SITE_ID")
     @JsonBackReference
     private SiteEntity siteEntity;
-    @Column(name = "URL")
+    @Column(name = "URL", unique = true)
     private String url;
     @Column(name = "SUCCESS")
     private Boolean success;

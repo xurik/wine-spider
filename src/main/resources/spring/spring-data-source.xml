@@ -17,9 +17,9 @@
         <!-- 驱动不同 -->
         <property name="driverClassName" value="com.alibaba.druid.proxy.DruidDriver" />
         <property name="url"
-                  value="jdbc:wrap-jdbc:driver=com.mysql.jdbc.Driver:filters=default:name=com.alibaba.dragoon.master:${rac.database.url}" />
-        <property name="username" value="${rac.database.username}" />
-        <property name="password" value="${rac.database.password}">
+                  value="jdbc:wrap-jdbc:driver=com.mysql.jdbc.Driver:filters=default:name=com.alibaba.dragoon.master:${spider.database.url}" />
+        <property name="username" value="${spider.database.username}" />
+        <property name="password" value="${spider.database.password}">
         </property>
         <property name="maxActive" value="5" />
         <property name="initialSize" value="1" />

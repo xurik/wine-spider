@@ -3,10 +3,8 @@ package com.wine.spider.select.spider.yemaijiu;
 import com.wine.spider.entity.ItemEntity;
 import com.wine.spider.entity.WineDataEntity;
 import com.wine.spider.select.Select;
-import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
 
-import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,8 @@ public class WineDataSelect implements Select<WineDataEntity,ItemEntity> {
         List<WineDataEntity> list = new ArrayList<WineDataEntity>();
         WineDataEntity wineDataEntity = new WineDataEntity();
 
-        String fullNameZh =document.select("div.promotionMiddleTop").text();
+        String fullNameZh =document.select("div.promotionMiddleTop h1").text();
+
         wineDataEntity.setFullNameZh(fullNameZh);
         list.add(wineDataEntity) ;
         return list;

@@ -20,7 +20,7 @@ public class ListEntity extends BaseEntity {
     @JoinColumn(name="SEARCH_ID")
     @JsonBackReference
     private SearchEntity searchEntity;
-    @Column(name = "URL")
+    @Column(name = "URL", unique = true)
     private String url;
     @Column(name = "SUCCESS")
     private Boolean success;
