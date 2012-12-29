@@ -35,6 +35,7 @@ public class ItemSelect implements Select<ItemEntity,ListEntity> {
             if (logger.isWarnEnabled()){
                 logger.warn("ItemSelect.execute:找不到商品！listId:"+listEntity.getId());
             }
+            return Collections.EMPTY_LIST;
         }
         List<ItemEntity> result = new ArrayList<ItemEntity>();
         Iterator<Element> iterator = pnames.iterator();

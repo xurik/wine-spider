@@ -123,7 +123,7 @@ public class RunServiceImpl implements RunService,ApplicationContextAware{
         for (WineDataEntity wineDataEntity:list){
             wineDataEntity.setUrl(itemEntity.getUrl());
             wineDataEntity.setItemUUID(itemEntity.getUuid());
-            wineDataEntity.setStatus("pending");
+            wineDataEntity.setStatus("new");
             WineDataEntity old = wineDataService.findByUrl(itemEntity.getUrl());
             if (old != null){
                 old = BeanCopyUtil.copyWithoutNull(old,wineDataEntity);

@@ -102,65 +102,100 @@ public class SiteServiceImpl implements SiteService, ApplicationContextAware {
         if (searchEntityList == null || searchEntityList.isEmpty()) {
             return;
         }
-
         for (SearchEntity searchEntity : searchEntityList) {
-            String selectName = searchEntity.getSelectName();
-            if (StringUtils.isBlank(selectName)) {
-                continue;
-            }
-            Map<String, Select> sm = null;
             try {
-                sm = applicationContext.getBean(selectName, Map.class);
-            } catch (Exception e) {
-                logger.error("找不到selectName。searchId:", searchEntity.getId(), e);
-                continue;
+                build(searchEntity);
+            } catch (Exception e){
+                logger.error("error!searchId:{}",searchEntity.getId(),e);
             }
 
-            Select slist = sm.get("list");
-            Select sitem = sm.get("item");
-            Document doc = null;
-            try {
-                doc = Jsoup.parse(new URL(searchEntity.getUrl()), 5000);
-            } catch (Exception e) {
-                logger.error("访问搜索页面失败！searchId:" + searchEntity.getId());
-            }
-            searchEntity.setHtml(doc.html());
-            searchService.save(searchEntity);
+        }
+    }
 
-            List<ListEntity> lists = slist.execute(doc, searchEntity);
-            for (ListEntity listEntity : lists) {
-                ListEntity tmp = listService.findByUrl(listEntity.getUrl());
-                if (tmp != null) {
-                    listEntity.setId(tmp.getId());
-                }
-                listService.save(listEntity);
-            }
-            for (ListEntity listEntity : lists) {
-                try {
-                    doc = Jsoup.parse(new URL(listEntity.getUrl()), 5000);
-                    randomSleep(siteEntity);
-                } catch (Exception e) {
-                    logger.error("访问列表页面失败！searchId:" + searchEntity.getId());
-                }
-                listEntity.setHtml(doc.html());
-                listService.save(listEntity);
-                List<ItemEntity> items = sitem.execute(doc, listEntity);
-                for (ItemEntity itemEntity : items) {
-                    try {
-                        doc = Jsoup.parse(new URL(itemEntity.getUrl()), 5000);
-                        randomSleep(siteEntity);
-                    } catch (Exception e) {
-                        logger.error("访问Item页面失败！searchId:" + searchEntity.getId());
-                    }
-                    itemEntity.setHtml(doc.html());
-                    ItemEntity tmp = itemService.findByUrl(itemEntity.getUrl());
-                    if (tmp != null) {
-                        itemEntity.setId(tmp.getId());
-                    }
-                    itemService.save(itemEntity);
-                }
+    private void build(SearchEntity searchEntity){
+        SiteEntity siteEntity = searchEntity.getSiteEntity();
+        String selectName = searchEntity.getSelectName();
+        if (StringUtils.isBlank(selectName)) {
+            return;
+        }
+        Map<String, Select> sm = null;
+        try {
+            sm = applicationContext.getBean(searchEntity.getSelectName(), Map.class);
+        } catch (Exception e) {
+            logger.error("找不到selectName。searchId:", searchEntity.getId(), e);
+            return;
+        }
+        Document doc = null;
+        try {
+            doc = Jsoup.parse(new URL(searchEntity.getUrl()), 5000);
+        } catch (Exception e) {
+            logger.error("访问搜索页面失败！searchId:" + searchEntity.getId());
+        }
+        searchEntity.setHtml(doc.html());
+        searchService.save(searchEntity);
+        List<ListEntity> lists = sm.get("list").execute(doc, searchEntity);
+        for (ListEntity listEntity : lists) {
+            try {
+                listEntity.setSearchEntity(searchEntity);
+                build(listEntity);
+            } catch (Exception e){
+                logger.error("error!listId:{}",listEntity.getId(),e);
             }
         }
+    }
+
+    private void build(ListEntity listEntity){
+        SearchEntity searchEntity = listEntity.getSearchEntity();
+        SiteEntity siteEntity = searchEntity.getSiteEntity();
+        ListEntity listOld = listService.findByUrl(listEntity.getUrl());
+        if (listOld != null) {
+            listEntity.setId(listOld.getId());
+        }
+        Document doc = null;
+        try {
+            doc = Jsoup.parse(new URL(listEntity.getUrl()), 5000);
+            randomSleep(siteEntity);
+        } catch (Exception e) {
+            logger.error("访问列表页面失败！searchId:" + searchEntity.getId());
+            return;
+        }
+        listEntity.setHtml(doc.html());
+        listService.save(listEntity);
+        Map<String, Select> sm = null;
+        try {
+            sm = applicationContext.getBean(searchEntity.getSelectName(), Map.class);
+        } catch (Exception e) {
+            logger.error("找不到selectName。searchId:", searchEntity.getId(), e);
+            return;
+        }
+        List<ItemEntity> items = sm.get("item").execute(doc, listEntity);
+        for (ItemEntity itemEntity : items) {
+            try {
+                itemEntity.setListEntity(listEntity);
+                build(itemEntity);
+            } catch (Exception e){
+                logger.error("error!itemId:{}",itemEntity.getId(),e);
+            }
+        }
+    }
+
+    private void build(ItemEntity itemEntity){
+        SearchEntity searchEntity = itemEntity.getListEntity().getSearchEntity();
+        SiteEntity siteEntity = searchEntity.getSiteEntity();
+        Document doc = null;
+        try {
+            doc = Jsoup.parse(new URL(itemEntity.getUrl()), 5000);
+            randomSleep(siteEntity);
+        } catch (Exception e) {
+            logger.error("访问Item页面失败！searchId:" + searchEntity.getId());
+            return;
+        }
+        itemEntity.setHtml(doc.html());
+        ItemEntity tmp = itemService.findByUrl(itemEntity.getUrl());
+        if (tmp != null) {
+            itemEntity.setId(tmp.getId());
+        }
+        itemService.save(itemEntity);
     }
 
     private void randomSleep(SiteEntity siteEntity) {

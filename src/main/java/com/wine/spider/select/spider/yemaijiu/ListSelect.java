@@ -59,7 +59,8 @@ public class ListSelect implements Select<ListEntity,SearchEntity> {
                 path +=":"+url.getPort();
             }
         } catch (MalformedURLException e) {
-
+            logger.error("error!",e);
+            return Collections.EMPTY_LIST;
         }
         path += "/z2-c1-p";
         Integer count = Integer.valueOf(pageCount);
