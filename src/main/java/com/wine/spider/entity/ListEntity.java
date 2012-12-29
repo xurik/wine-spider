@@ -28,7 +28,7 @@ public class ListEntity extends BaseEntity {
     @Column(name = "HTML")
     @Lob
     private String html;
-
+    @JsonBackReference
     @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY, mappedBy = "listEntity")
     private List<ItemEntity> itemEntityList = new ArrayList<ItemEntity>();
 

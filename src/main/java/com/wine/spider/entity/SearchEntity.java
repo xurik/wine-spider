@@ -31,7 +31,7 @@ public class SearchEntity extends BaseEntity {
     private String html;
     @Column(name = "SELECT_NAME")
     private String selectName;
-
+    @JsonBackReference
     @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY, mappedBy = "searchEntity")
     private List<ListEntity> listEntityList = new ArrayList<ListEntity>();
 

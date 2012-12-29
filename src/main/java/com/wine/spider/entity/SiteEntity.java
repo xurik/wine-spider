@@ -1,5 +1,6 @@
 package com.wine.spider.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.stereotype.Repository;
@@ -31,6 +32,7 @@ public class SiteEntity extends BaseEntity {
     private Integer random;
     @Column(name = "NOTE")
     private String note;
+    @JsonBackReference
     @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY,mappedBy = "siteEntity")
     //这里配置关系，并且确定关系维护端和被维护端。mappBy表示关系被维护端，只有关系端有权去更新外键。这里还有注意OneToMany默认的加载方式是赖加载。当看到设置关系中最后一个单词是Many，那么该加载默认为懒加载
     private List<SearchEntity> searchEntityList = new ArrayList<SearchEntity>();
