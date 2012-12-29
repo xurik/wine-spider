@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -132,7 +133,6 @@ public class RunServiceImpl implements RunService,ApplicationContextAware{
             }
 
         }
-        Jsoup.parse(html);
     }
 
     @Override

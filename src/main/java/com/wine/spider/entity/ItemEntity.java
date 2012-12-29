@@ -24,6 +24,7 @@ public class ItemEntity extends BaseEntity {
     private String url;
     @Column(name = "SUCCESS")
     private Boolean success;
+    @JsonBackReference
     @Column(name = "HTML")
     @Lob
     private String html;

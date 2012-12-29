@@ -10,7 +10,7 @@ import org.apache.commons.lang.StringUtils;
  * To change this template use File | Settings | File Templates.
  */
 public class WineryHelper {
-    public static String[] matching ;
+    private static String[] matching ;
     static {
         matching =new String[]{"酒庄","庄园","城堡","山庄"};
     }
@@ -22,11 +22,13 @@ public class WineryHelper {
                 winery = StringUtils.substring(name,0,index)+m;
             }
         }
-
-        return   winery;
+        if (StringUtils.isBlank(winery)){
+            winery = StringUtils.substring(name,0,StringUtils.indexOf(name,"葡萄酒"));
+        }
+        return winery;
     }
 
     public static void main(String[] args) {
-        System.out.println(WineryHelper.fromName("xxx酒庄葡萄酒"));
+        System.out.println(WineryHelper.fromName("xxx酒葡萄酒"));
     }
 }

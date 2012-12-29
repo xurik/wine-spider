@@ -148,6 +148,11 @@
 				<artifactId>jackson-databind</artifactId>
 				<version>2.0.5</version>
 			</dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.1.23</version>
+            </dependency>
 			<!--xml -->
 			<dependency>
 				<groupId>com.thoughtworks.xstream</groupId>
@@ -293,6 +298,11 @@
                 <groupId>net.sourceforge.htmlunit</groupId>
                 <artifactId>htmlunit</artifactId>
                 <version>2.11</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>3.1</version>
             </dependency>
 		</dependencies>
   <build>

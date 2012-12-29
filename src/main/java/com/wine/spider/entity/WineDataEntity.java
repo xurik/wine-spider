@@ -91,6 +91,13 @@ public class WineDataEntity extends BaseEntity {
     /**最佳品尝温℃*/
     @Column(name="TASTING_TEMPERATURE")
     private String  tastingTemperature;
+    /**适用场合*/
+    @Column(name="OCCASION")
+    private String occasion;
+    /***酒体*/
+    @Column(name = "WINE_BODY")
+    private String wineBody;
+
     /**Robert Parker 评分*/
     @Column(name="ROBERT_PARKER_SCORE")
     private String  roertParkerScore;
@@ -181,6 +188,9 @@ public class WineDataEntity extends BaseEntity {
     /**编号2*/
     @Column(name = "NUM2")
     private String num2;
+    /**图片*/
+    @Column(name="images",length = 3000)
+    private String images;
 
     public String getItemUUID() {
         return itemUUID;
@@ -604,5 +614,29 @@ public class WineDataEntity extends BaseEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    public String getOccasion() {
+        return occasion;
+    }
+
+    public void setOccasion(String occasion) {
+        this.occasion = occasion;
+    }
+
+    public String getWineBody() {
+        return wineBody;
+    }
+
+    public void setWineBody(String wineBody) {
+        this.wineBody = wineBody;
     }
 }

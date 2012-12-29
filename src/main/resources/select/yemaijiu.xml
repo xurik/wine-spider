@@ -18,5 +18,4 @@
                     <bean class="com.wine.spider.select.spider.yemaijiu.WineDataSelect" />
                 </entry>
     </util:map>
-
 </beans>

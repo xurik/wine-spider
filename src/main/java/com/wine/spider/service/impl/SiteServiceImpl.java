@@ -12,6 +12,7 @@ import com.wine.spider.service.ListService;
 import com.wine.spider.service.SearchService;
 import com.wine.spider.service.SiteService;
 import com.wine.spider.util.BeanCopyUtil;
+import com.wine.spider.util.RandomSleepUtil;
 import com.wine.spider.util.UUIDUtil;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
@@ -42,7 +43,7 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 @Service
-public class SiteServiceImpl implements SiteService,ApplicationContextAware {
+public class SiteServiceImpl implements SiteService, ApplicationContextAware {
     private final static Logger logger = LoggerFactory.getLogger(SiteServiceImpl.class);
     @Autowired
     private SiteDao siteDao;
@@ -52,28 +53,29 @@ public class SiteServiceImpl implements SiteService,ApplicationContextAware {
     private ListService listService;
     @Autowired
     private ItemService itemService;
-    private ApplicationContext applicationContext ;
-    private static final Random random = new Random();
+    private ApplicationContext applicationContext;
+
     @Transactional
     @Override
     public SiteEntity save(SiteEntity entity) {
         Assert.notNull(entity);
-        if(entity.getId() == null){
+        if (entity.getId() == null) {
             entity.setUuid(UUIDUtil.random());
             entity.setGmtCreate(new Date());
-        }else {
+        } else {
             entity = BeanCopyUtil.copyWithoutNull(siteDao.get(entity.getId()), entity);
         }
         entity.setGmtModified(new Date());
         siteDao.save(entity);
         return entity;
     }
+
     @Transactional
-    public SiteEntity addSearch(Long id,SearchEntity searchEntity){
-        if(searchEntity.getId() == null){
+    public SiteEntity addSearch(Long id, SearchEntity searchEntity) {
+        if (searchEntity.getId() == null) {
             searchEntity.setUuid(UUIDUtil.random());
             searchEntity.setGmtCreate(new Date());
-        }else {
+        } else {
             searchEntity = BeanCopyUtil.copyWithoutNull(searchService.get(searchEntity.getId()), searchEntity);
         }
         searchEntity.setGmtModified(new Date());
@@ -97,20 +99,20 @@ public class SiteServiceImpl implements SiteService,ApplicationContextAware {
     public void build(Long id) {
         SiteEntity siteEntity = siteDao.get(id);
         List<SearchEntity> searchEntityList = siteEntity.getSearchEntityList();
-        if (searchEntityList ==null || searchEntityList.isEmpty()){
+        if (searchEntityList == null || searchEntityList.isEmpty()) {
             return;
         }
 
-        for (SearchEntity searchEntity : searchEntityList){
+        for (SearchEntity searchEntity : searchEntityList) {
             String selectName = searchEntity.getSelectName();
-            if(StringUtils.isBlank(selectName)){
+            if (StringUtils.isBlank(selectName)) {
                 continue;
             }
-            Map<String,Select> sm = null;
+            Map<String, Select> sm = null;
             try {
-                sm = applicationContext.getBean(selectName,Map.class);
-            }catch (Exception e){
-                logger.error("找不到selectName。searchId:",searchEntity.getId(),e);
+                sm = applicationContext.getBean(selectName, Map.class);
+            } catch (Exception e) {
+                logger.error("找不到selectName。searchId:", searchEntity.getId(), e);
                 continue;
             }
 
@@ -120,39 +122,39 @@ public class SiteServiceImpl implements SiteService,ApplicationContextAware {
             try {
                 doc = Jsoup.parse(new URL(searchEntity.getUrl()), 5000);
             } catch (Exception e) {
-                logger.error("访问搜索页面失败！searchId:"+searchEntity.getId());
+                logger.error("访问搜索页面失败！searchId:" + searchEntity.getId());
             }
             searchEntity.setHtml(doc.html());
             searchService.save(searchEntity);
 
-            List<ListEntity> lists = slist.execute(doc,searchEntity);
-            for (ListEntity listEntity : lists){
+            List<ListEntity> lists = slist.execute(doc, searchEntity);
+            for (ListEntity listEntity : lists) {
                 ListEntity tmp = listService.findByUrl(listEntity.getUrl());
-                if(tmp != null){
+                if (tmp != null) {
                     listEntity.setId(tmp.getId());
                 }
                 listService.save(listEntity);
             }
-            for (ListEntity listEntity : lists){
+            for (ListEntity listEntity : lists) {
                 try {
                     doc = Jsoup.parse(new URL(listEntity.getUrl()), 5000);
                     randomSleep(siteEntity);
                 } catch (Exception e) {
-                    logger.error("访问列表页面失败！searchId:"+searchEntity.getId());
+                    logger.error("访问列表页面失败！searchId:" + searchEntity.getId());
                 }
                 listEntity.setHtml(doc.html());
                 listService.save(listEntity);
-                List<ItemEntity> items = sitem.execute(doc,listEntity);
-                for (ItemEntity itemEntity:items){
+                List<ItemEntity> items = sitem.execute(doc, listEntity);
+                for (ItemEntity itemEntity : items) {
                     try {
                         doc = Jsoup.parse(new URL(itemEntity.getUrl()), 5000);
                         randomSleep(siteEntity);
                     } catch (Exception e) {
-                        logger.error("访问Item页面失败！searchId:"+searchEntity.getId());
+                        logger.error("访问Item页面失败！searchId:" + searchEntity.getId());
                     }
                     itemEntity.setHtml(doc.html());
                     ItemEntity tmp = itemService.findByUrl(itemEntity.getUrl());
-                    if (tmp != null){
+                    if (tmp != null) {
                         itemEntity.setId(tmp.getId());
                     }
                     itemService.save(itemEntity);
@@ -161,19 +163,18 @@ public class SiteServiceImpl implements SiteService,ApplicationContextAware {
         }
     }
 
-   private void randomSleep(SiteEntity siteEntity){
-    if (siteEntity.getRate() != null && siteEntity.getRate() != 0){
-        long s = siteEntity.getRate();
-        if(siteEntity.getRandom() != null && siteEntity.getRandom() != 0){
-            s = s*random.nextInt(siteEntity.getRandom());
+    private void randomSleep(SiteEntity siteEntity) {
+        Integer rate = siteEntity.getRate();
+        if (rate == null || rate == 0) {
+            return;
         }
-        try {
-            Thread.sleep(Long.valueOf(s));
-        } catch (InterruptedException e) {
-            logger.error("sleep error!",e);
+        Integer random = siteEntity.getRandom();
+        if (random == null) {
+            random = 10;
         }
+        RandomSleepUtil.sleep(rate, random);
+
     }
-   }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

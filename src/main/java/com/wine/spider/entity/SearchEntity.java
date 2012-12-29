@@ -25,13 +25,14 @@ public class SearchEntity extends BaseEntity {
     private String url;
     @Column(name = "SUCCESS")
     private Boolean success;
+    @JsonBackReference
     @Column(name = "HTML")
     @Lob
     private String html;
     @Column(name = "SELECT_NAME")
     private String selectName;
 
-    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "searchEntity")
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY, mappedBy = "searchEntity")
     private List<ListEntity> listEntityList = new ArrayList<ListEntity>();
 
     public SiteEntity getSiteEntity() {

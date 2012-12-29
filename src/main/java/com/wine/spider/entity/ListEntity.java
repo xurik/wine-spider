@@ -24,11 +24,12 @@ public class ListEntity extends BaseEntity {
     private String url;
     @Column(name = "SUCCESS")
     private Boolean success;
+    @JsonBackReference
     @Column(name = "HTML")
     @Lob
     private String html;
 
-    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "listEntity")
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY, mappedBy = "listEntity")
     private List<ItemEntity> itemEntityList = new ArrayList<ItemEntity>();
 
     public SearchEntity getSearchEntity() {
